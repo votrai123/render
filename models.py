@@ -34,11 +34,15 @@ class Book(db.Model):
 
   id = Column(Integer, primary_key=True)
   title = Column(String)
+  content = Column(String)
+  type = Column(String)
   release_date = Column(DateTime)
   authors = relationship('Author', backref='author', lazy = True)
 
-  def __init__(self, title, release_date):
+  def __init__(self, title, content, release_date, type):
     self.title = title
+    self.content = content
+    self.type = type
     self.release_date = release_date
 
   
@@ -57,6 +61,8 @@ class Book(db.Model):
     return {
       'id': self.id,
       'title': self.title,
+      'type': self.type,
+      'content': self.content,
       'release_date': self.release_date,
       'authors': list(map(lambda author: author.format(), self.authors))
     }
