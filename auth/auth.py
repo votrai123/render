@@ -8,7 +8,7 @@ from os import environ
 
 AUTH0_DOMAIN = environ.get('AUTH0_DOMAIN', 'dev-trainv.us.auth0.com')
 ALGORITHMS = ['RS256']
-API_AUDIENCE = environ.get('API_AUDIENCE', 'coffee')
+API_AUDIENCE = environ.get('API_AUDIENCE', 'capstone')
 
 # AuthError Exception
 '''
