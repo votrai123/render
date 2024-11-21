@@ -58,11 +58,12 @@ def create_app(test_config=None):
         content = body.get('content', None)
         type = body.get('type', None)
         release_date = body.get('release_date', None)
+        author_id = body.get('author_id', None)
 
-        if title is None or release_date is None:
+        if title is None or content is None or release_date is None or type is None or author_id is None:
             abort(400, "Body Error")
 
-        book = Book(title=title, content = content, type = type, release_date=release_date)
+        book = Book(title=title, content = content,release_date=release_date, type = type, author_id=author_id )
 
         book.insert()
 
@@ -82,12 +83,11 @@ def create_app(test_config=None):
         name = body.get('name', None)
         age = body.get('age', None)
         gender = body.get('gender', None)
-        book_id = body.get('book_id', None)
 
-        if name is None or age is None or gender is None or book_id is None:
+        if name is None or age is None or gender is None:
             abort(400, "Body Error")
 
-        author = Author(name=name, age=age, gender=gender, book_id=book_id)
+        author = Author(name=name, age=age, gender=gender)
 
         author.insert()
 
@@ -143,6 +143,7 @@ def create_app(test_config=None):
         content = body.get('content', None)
         type = body.get('type', None)
         release_date = body.get('release_date', None)
+        author_id = body.get('author_id', None)
 
         if title:
             updated_book.title = title
@@ -152,6 +153,8 @@ def create_app(test_config=None):
             updated_book.type = type
         if release_date:
             updated_book.release_date = release_date
+        if author_id:
+            author_update.author_id = author_id
 
         book_update.update()
 
@@ -175,7 +178,6 @@ def create_app(test_config=None):
         name = body.get('name', None)
         age = body.get('age', None)
         gender = body.get('gender', None)
-        book_id = body.get('book_id', None)
 
         if name:
             author_update.name = name
@@ -183,8 +185,7 @@ def create_app(test_config=None):
             author_update.age = age
         if gender:
             author_update.gender = gender
-        if book_id:
-            author_update.book_id = book_id
+        
 
         try:
             author_update.update()

@@ -37,13 +37,14 @@ class Book(db.Model):
   content = Column(String)
   type = Column(String)
   release_date = Column(DateTime)
-  authors = relationship('Author', backref='author', lazy = True)
+  author_id = Column(Integer, ForeignKey('authors.id'), nullable= True)
 
-  def __init__(self, title, content, release_date, type):
+  def __init__(self, title, content, release_date, type, author_id):
     self.title = title
     self.content = content
     self.type = type
     self.release_date = release_date
+    self.author_id = author_id
 
   
   def insert(self):
@@ -64,7 +65,7 @@ class Book(db.Model):
       'type': self.type,
       'content': self.content,
       'release_date': self.release_date,
-      'authors': list(map(lambda author: author.format(), self.authors))
+      'author_id': self.author_id,
     }
 
 
@@ -79,13 +80,12 @@ class Author(db.Model):
   name = Column(String)
   age = Column(Integer)
   gender = Column(String)
-  book_id = Column(Integer, ForeignKey('books.id'), nullable= True)
+  books = relationship('Books', backref='book', lazy = True)
 
-  def __init__(self, name, age, gender, movie_id):
+  def __init__(self, name, age, gender):
     self.name = name
     self.age = age
     self.gender = gender
-    self.movie_id = movie_id
 
   
   def insert(self):
@@ -105,7 +105,7 @@ class Author(db.Model):
       'name': self.name,
       'age': self.age,
       'gender': self.gender,
-      'movie_id': self.movie_id,
+      'books': list(map(lambda book: book.format(), self.books))
     }
 
 
