@@ -265,9 +265,9 @@ def create_app(test_config=None):
             'error': 405,
             'message': 'method is not allowed'
         }), 405
-        return app
+    return app
 
-    app = create_app()
+app = create_app()
 
 if __name__ == '__main__':
     app.run()
