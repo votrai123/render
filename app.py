@@ -28,6 +28,7 @@ def create_app(test_config=None):
     @requires_auth('view:books')
     def get_books(payload):
         books = Book.query.all()
+        print(str(books)+ " books ====")
         books = list(map(lambda book: book.format(), books))
         return jsonify({
             "success": True,
@@ -39,6 +40,7 @@ def create_app(test_config=None):
     @requires_auth('view:authors')
     def get_authors(payload):
         authors = Actor.query.all()
+        print(str(authors)+ " authors ====")
         authors = list(map(lambda author: author.format(), authors))
         return jsonify({
             "success": True,
@@ -51,6 +53,7 @@ def create_app(test_config=None):
     def create_book(payload):
         body = request.get_json()
 
+        print(str(body)+ " body ====")
         if body is None:
             abort(400)
 
@@ -59,6 +62,11 @@ def create_app(test_config=None):
         type = body.get('type', None)
         release_date = body.get('release_date', None)
         author_id = body.get('author_id', None)
+        print(str(title)+ " title ====")
+        print(str(content)+ " content ====")
+        print(str(type)+ " type ====")
+        print(str(release_date)+ " release_date ====")
+        print(str(author_id)+ " author_id ====")
 
         if title is None or content is None or release_date is None or type is None or author_id is None:
             abort(400, "Body Error")
@@ -77,12 +85,17 @@ def create_app(test_config=None):
     def create_author(payload):
         body = request.get_json()
 
+        print(str(body)+ " body ====")
+
         if body is None:
             abort(400)
 
         name = body.get('name', None)
         age = body.get('age', None)
         gender = body.get('gender', None)
+        print(str(name)+ " name ====")
+        print(str(age)+ " name ====")
+        print(str(gender)+ " name ====")
 
         if name is None or age is None or gender is None:
             abort(400, "Body Error")
