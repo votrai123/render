@@ -33,7 +33,6 @@ def create_app():
     def get_books(payload):
         try:
             books = Book.query.all()
-            print(str(books)+ " books ====")
             books = list(map(lambda book: book.format(), books))
             return jsonify({
                 "success": True,
@@ -49,7 +48,6 @@ def create_app():
     def get_authors(payload):
         try:
             authors = Author.query.all()
-            print(str(authors)+ " authors ====")
             authors = list(map(lambda author: author.format(), authors))
             return jsonify({
                 "success": True,
@@ -65,7 +63,6 @@ def create_app():
     def create_book(payload):
         body = request.get_json()
         try:
-            print(str(body)+ " body ====")
             if body is None:
                 abort(400)
 
@@ -74,11 +71,6 @@ def create_app():
             type = body.get('type', None)
             release_date = body.get('release_date', None)
             author_id = body.get('author_id', None)
-            print(str(title)+ " title ====")
-            print(str(content)+ " content ====")
-            print(str(type)+ " type ====")
-            print(str(release_date)+ " release_date ====")
-            print(str(author_id)+ " author_id ====")
 
             if title is None or content is None or release_date is None or type is None or author_id is None:
                 abort(400, "Body Error")
@@ -88,7 +80,8 @@ def create_app():
             book.insert()
 
             return jsonify({
-                "success": True
+                "success": True,
+                "book_id": book.id
             })
         except Exception as e:
             print(e)
@@ -100,17 +93,12 @@ def create_app():
     def create_author(payload):
         body = request.get_json()
         try:
-            print(str(body)+ " body ====")
-
             if body is None:
                 abort(400)
 
             name = body.get('name', None)
             age = body.get('age', None)
             gender = body.get('gender', None)
-            print(str(name)+ " name ====")
-            print(str(age)+ " age ====")
-            print(str(gender)+ " gender ====")
 
             if name is None or age is None or gender is None:
                 abort(400, "Body Error")
@@ -129,12 +117,11 @@ def create_app():
     @app.route('/books/<int:book_id>', methods=['DELETE'])
     @requires_auth('delete:books')
     def delete_book(payload, book_id):
+        book = Book.query.filter(Book.id == book_id).one_or_none()
+
+        if book is None:
+            abort(404, "Not found book " + str(book_id))
         try:
-            book = Book.query.filter(Book.id == book_id).one_or_none()
-
-            if book is None:
-                abort(404, "Not found book " + str(book_id))
-
             book.delete()
 
             return jsonify({
@@ -149,12 +136,10 @@ def create_app():
     @app.route('/authors/<int:author_id>', methods=['DELETE'])
     @requires_auth('delete:authors')
     def delete_author(payload, author_id):
+        author = Author.query.filter(Author.id == author_id).one_or_none()
+        if author is None:
+            abort(404, "Not found author" + str(author_id))
         try:
-            author = Author.query.filter(Author.id == author_id).one_or_none()
-
-            if author is None:
-                abort(404, "Not found author" + str(author_id))
-
             author.delete()
 
             return jsonify({

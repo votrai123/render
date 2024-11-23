@@ -126,7 +126,6 @@ def verify_decode_jwt(token):
                 'e': key['e']
             }
             break
-    print(token)
     if rsa_key:
         try:
 
