@@ -8,7 +8,7 @@ from auth.auth import AuthError, requires_auth
 
 from datetime import datetime
 
-def create_app(test_config=None):
+def create_app():
 
     app = Flask(__name__)
     setup_db(app)
@@ -48,7 +48,7 @@ def create_app(test_config=None):
     @requires_auth('view:authors')
     def get_authors(payload):
         try:
-            authors = Actor.query.all()
+            authors = Author.query.all()
             print(str(authors)+ " authors ====")
             authors = list(map(lambda author: author.format(), authors))
             return jsonify({
@@ -99,12 +99,6 @@ def create_app(test_config=None):
     @requires_auth('post:authors')
     def create_author(payload):
         body = request.get_json()
-        new_question = body.get("name")
-        new_answer = body.get("age")
-        new_difficulty = body.get("gender")
-        print(str(name)+ " name ====")
-        print(str(age)+ " age ====")
-        print(str(gender)+ " gender ====")
         try:
             print(str(body)+ " body ====")
 

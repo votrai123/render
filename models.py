@@ -80,7 +80,7 @@ class Author(db.Model):
   name = Column(String)
   age = Column(Integer)
   gender = Column(String)
-  books = relationship('Books', backref='book', lazy = True)
+  books = relationship('Book', backref='book', lazy = True)
 
   def __init__(self, name, age, gender):
     self.name = name
