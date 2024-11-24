@@ -1,10 +1,125 @@
+### Introduction
 
+Welcome to the **Casting Agency API** project! This API allows you to manage a collection of books and authors, providing functionalities for creating, retrieving, updating, and deleting book and author records. This project is particularly useful for managing a large library of books and their respective authors, allowing users with different roles to perform various actions based on their permissions.
+
+The project utilizes several technologies and libraries including Flask, SQLAlchemy, and Auth0 for authentication and authorization.
+
+### Project Structure
+
+```
+├── app.py                   # Main application entry point
+├── auth                     # Authentication and authorization module
+│   ├── __init__.py
+│   ├── auth.py              # Contains auth functions and decorators
+├── models.py                # Database models for SQLAlchemy
+├── test_app.py              # Unit tests for API endpoints
+├── requirements.txt         # Python dependencies
+└── README.md                # Project documentation
+```
+
+### Development Setup
+
+To set up the development environment for this project, follow the steps below:
+
+#### 1. Clone the Repository
+
+First, clone the repository to your local machine:
+
+```sh
+https://github.com/votrai123/render.git
+cd render
+```
+
+#### 2. Create a Virtual Environment
+
+Create a virtual environment to manage dependencies:
+
+```sh
+python3 -m venv venv
+source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+```
+
+#### 3. Install Dependencies
+
+Install the required dependencies using pip:
+
+```sh
+pip install -r requirements.txt
+```
+
+#### 4. Set Up the Database
+
+Set up the database using SQLAlchemy. You can run the following command to create the necessary tables:
+
+```sh
+python
+>>> from models import setup_db, db_drop_and_create_all
+>>> setup_db(app)
+>>> db_drop_and_create_all()
+```
+
+#### 5. Configure Environment Variables
+
+Create a `.env` file in the root directory and add the following environment variables:
+
+```
+AUTH0_DOMAIN=dev-trainv.us.auth0.com
+ALGORITHMS=RS256
+API_AUDIENCE=capstone
+DATABASE_URL=postgresql://my_postgres_9p24_user:iuT5Yz7AmDNTsrsoLNMy6nJuoWmEliFQ@dpg-csh4ln3tq21c73e3fkpg-a.oregon-postgres.render.com/my_postgres_9p24
+```
+
+## This is my host deployed
+```
+https://render-deployment-example-jf0r.onrender.com
+```
+
+
+
+#### 6. Run the Application
+
+Start the Flask application:
+
+```sh
+flask run
+```
+
+The application will be available at `http://localhost:5000`.
+
+#### 7. Running Tests
+
+To run the test suite, simply execute:
+
+```sh
+python test_app.py
+```
+
+This will run all the unit tests defined in `test_app.py` to ensure the API endpoints are functioning correctly.
+
+---
+
+Feel free to copy and adjust this documentation as needed. If you have any further questions or need additional details, just let me know! 😊
 ---
 
 # API Documentation
 
 ## Overview
 This API allows you to manage books and authors, including functionalities such as creating, retrieving, updating, and deleting records. 
+
+
+##### Permissions
+
+Following permissions should be created under created API settings.
+
+* `view:authors`
+* `view:books`
+* `delete:authors`
+* `post:authors`
+* `update:authors`
+* `update:books`
+* `post:books`
+* `delete:books`
+
 
 ## Base URL
 The base URL for all endpoints is:
