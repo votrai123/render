@@ -1,0 +1,472 @@
+{
+	"info": {
+		"_postman_id": "e3f0ea71-bf73-4d42-b2b5-23287d5687c5",
+		"name": "Capstone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31884083"
+	},
+	"item": [
+		{
+			"name": "manager",
+			"item": [
+				{
+					"name": "login manager",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json()\r",
+									"\r",
+									"pm.collectionVariables.set(\"manager_token\", res.access_token)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/x-www-form-urlencoded",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"grant_type\": \"password\",\r\n  \"username\": \"manager\",\r\n  \"password\": \"Admin@123\",\r\n  \"audience\": \"capstone\",\r\n  \"client_id\": \"ekv1iT7rdyptRUGf6CKFQIu2kpuoQTxu\",\r\n  \"client_secret\": \"Ycfd9bF9oR9vrL01iW_mO2DAM24O8ha4OR4Z_0zOt7vgmR1ko1xH7lqX1v3XVqKX\",\r\n  \"scope\": \"openid profile email\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev-trainv.us.auth0.com/oauth/token",
+							"protocol": "https",
+							"host": [
+								"dev-trainv",
+								"us",
+								"auth0",
+								"com"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{manager_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Book 1\",\r\n    \"content\": \"Book content bla bla\",\r\n    \"type\": \"anime\",\r\n    \"release_date\": \"2024-11-23T19:07:00.000Z\",\r\n    \"author_id\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/books",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "authors",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{manager_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/authors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "books",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{manager_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/books",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create author",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{manager_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Nguyen Van A\",\r\n    \"age\": 18,\r\n    \"gender\": \"male\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/authors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update author",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{manager_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Nguyen Van B\",\r\n    \"age\": 20,\r\n    \"gender\": \"fmale\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/authors/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authors",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{manager_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Nguyen Van B\",\r\n    \"age\": 20,\r\n    \"gender\": \"fmale\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/authors/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authors",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete author",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/authors/9999",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authors",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "only view",
+			"item": [
+				{
+					"name": "authors",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{view_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/authors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "books",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{view_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/books",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login view",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json()\r",
+									"\r",
+									"pm.collectionVariables.set(\"view_token\", res.access_token)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/x-www-form-urlencoded",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"grant_type\": \"password\",\r\n  \"username\": \"onlyview\",\r\n  \"password\": \"Admin@123\",\r\n  \"audience\": \"capstone\",\r\n  \"client_id\": \"ekv1iT7rdyptRUGf6CKFQIu2kpuoQTxu\",\r\n  \"client_secret\": \"Ycfd9bF9oR9vrL01iW_mO2DAM24O8ha4OR4Z_0zOt7vgmR1ko1xH7lqX1v3XVqKX\",\r\n  \"scope\": \"openid profile email\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://dev-trainv.us.auth0.com/oauth/token",
+							"protocol": "https",
+							"host": [
+								"dev-trainv",
+								"us",
+								"auth0",
+								"com"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "https://render-deployment-example-jf0r.onrender.com",
+			"type": "string"
+		},
+		{
+			"key": "manager_token",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InBHWEVhakU4TXN0WmIyejdwcHpmZSJ9.eyJpc3MiOiJodHRwczovL2Rldi10cmFpbnYudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDY3MDY4NzUxMWVhOWIzYzZlOGEyZDkyMCIsImF1ZCI6WyJjYXBzdG9uZSIsImh0dHBzOi8vZGV2LXRyYWludi51cy5hdXRoMC5jb20vdXNlcmluZm8iXSwiaWF0IjoxNzMyMjg3MTMxLCJleHAiOjE3MzIzNzM1MzEsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgdmlldzpib29rcyB2aWV3OmF1dGhvcnMgcG9zdDpib29rcyBwb3N0OmF1dGhvcnMgZGVsZXRlOmJvb2tzIGRlbGV0ZTphdXRob3JzIHVwZGF0ZTpib29rcyB1cGRhdGU6YXV0aG9ycyIsImd0eSI6InBhc3N3b3JkIiwiYXpwIjoiZWt2MWlUN3JkeXB0UlVHZjZDS0ZRSXUya3B1b1FUeHUifQ.HDpqtmCUFT772nK7_rmhJQ-6mkRkLlLoEsLtIGTZ8uHBOhau9Hu5YijvIM6Fvzf9xJ8AHm3H9Ew2EzobDN7evxlpa-UXXGGskFcwtJ4XIM0oE4MkpL0uj3eB_DZeRCCRE87Cm3lH_KoILOsDZ-O_hqpVGzcEKFSK5khSUTQ3u9op7U5sTndce5QgJn2ubAMk3uDoSZbTgLMsla3VKMrKtNXaHZhg3SAjJW1Et8wDm1UT5a83yvbUf6zsAjIybOW7x5ODQ0Ms1yK-8W4sdEI_bCxNxU4V2t9HDImlVAh-CVukRghzQ4ZREFZQtCxLfQzGreIGfnnqmnoCl7CwCJ3mSg",
+			"type": "string"
+		},
+		{
+			"key": "view_token",
+			"value": ""
+		}
+	]
+}
